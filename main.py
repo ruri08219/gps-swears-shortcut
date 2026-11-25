@@ -15,9 +15,14 @@ ENTRY = (
 
 
 def main():
-    assert len(ENTRY) <= 200, "entry must be at most 200 characters"
-    assert ENTRY.strip(), "entry must not be blank"
-    assert "\n" not in ENTRY, "entry must be a single line"
+    if len(ENTRY) > 200:
+        raise ValueError(
+            f"entry is {len(ENTRY)} characters, over the 200-character gate"
+        )
+    if not ENTRY.strip():
+        raise ValueError("entry must not be blank")
+    if "\n" in ENTRY:
+        raise ValueError("entry must be a single line")
     out_dir = "/output"
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
